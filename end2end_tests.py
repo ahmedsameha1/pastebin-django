@@ -1,7 +1,17 @@
+import unittest
 from selenium import webdriver
 
-browser = webdriver.Chrome()
-browser.get("http://localhost:8000")
+class NewVisitorTest(unittest.TestCase):
+    def setUp(self):
+        self.browser = webdriver.Chrome()
 
-assert "Congratulations" in browser.title
-print("Ok")
+    def tearDown(self):
+        self.browser.quit()
+
+    def test_can_create_a_pastebin(self):
+        self.browser.get("http://localhost:8000")
+        self.assertIn("Pastebin", self.browser.title)
+        self.fail("Finish the test!")
+
+if __name__ == "__main__":
+    unittest.main()
