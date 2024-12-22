@@ -30,9 +30,11 @@ class NewVisitorTest(unittest.TestCase):
         self.assertEqual(header_url.text, "")
         submit_button.click()
         time.sleep(1)
+        inputbox = self.browser.find_element(By.ID, "id_new_pastebin")
+        header_url = self.browser.find_element(By.ID, "id_url")
         self.assertEqual(inputbox.text, "")
         self.assertEqual(header_url.text,
-                         "http://localhost:8000/4aa886a88005a7df")
+                         "http://localhost:8000/6bde0a9108435670b29d23fd689a0e90")
 
 
 if __name__ == "__main__":
