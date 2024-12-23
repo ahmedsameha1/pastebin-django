@@ -1,7 +1,11 @@
 <html>
-    <title>Pastebin</title>
-    <h1>Pastebin</h1>
-    <input id="id_new_pastebin" placeholder="Enter a new pastebin" />
+<title>Pastebin</title>
+<h1>Pastebin</h1>
+<form method="POST">
+    <input id="id_new_pastebin" name="pastebin_text" placeholder="Enter a new pastebin" />
     <button>Submit</button>
-    <h1 id="id_url"></h1>
+    {% csrf_token %}
+</form>
+<h1 id="id_url">{{ pastebin_url }}</h1>
+
 </html>
