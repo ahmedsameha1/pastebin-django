@@ -12,6 +12,13 @@ class HomePageTest(TestCase):
 
     def test_that_a_POST_request_shows_a_url(self):
         response = self.client.post("/", data={"pastebin_text": "hi"})
+        self.assertEqual(Pastebin.objects.count(), 1)
+        apastebin = Pastebin.objects.first()
+        self.assertEqual(apastebin.text, "hi")
+        self.assertEqual(apastebin.id,
+                         hashlib.md5("hi"
+                                     .encode("utf-8")).hexdigest())
+
         self.assertTemplateUsed(response, "home.html")
         self.assertContains(response,
                             "http://localhost:8000/49f68a5c8493ec2c0bf489821c21fc3b")
