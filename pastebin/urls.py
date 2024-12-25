@@ -16,8 +16,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from pb.views import home_page
+from pb.views import home_page, pastebin_page
 
 urlpatterns = [
     path("", home_page, name="home"),
+    path("<str:id>", pastebin_page, name="pastebin_page")
 ]

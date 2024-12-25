@@ -1,8 +1,10 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.http import HttpResponse
 import hashlib
 
 from pb.models import Pastebin
+
+BASE_URL = "/"
 
 
 def home_page(request):
@@ -13,7 +15,9 @@ def home_page(request):
         pastebin.text = request.POST.get("pastebin_text", "")
         pastebin.id = id
         pastebin.save()
-        return render(request,
-                      "home.html",
-                      {"pastebin_url": "http://localhost:8000/" + id})
+        return redirect(BASE_URL + id)
     return render(request, "home.html")
+
+
+def pastebin_page(request, id):
+    return HttpResponse()

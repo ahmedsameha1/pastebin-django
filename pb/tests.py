@@ -2,7 +2,7 @@ import hashlib
 from django.test import TestCase
 from django.http import HttpRequest
 from pb.models import Pastebin
-from pb.views import home_page
+from pb.views import BASE_URL, home_page
 
 
 class HomePageTest(TestCase):
@@ -10,18 +10,20 @@ class HomePageTest(TestCase):
         response = self.client.get("/")
         self.assertTemplateUsed(response, "home.html")
 
-    def test_that_a_POST_request_shows_a_url(self):
+    def test_that_a_POST_request_creates_then_saves_a_pastebin(self):
+        hi_id = hashlib.md5("hi"
+                         .encode("utf-8")).hexdigest()
         response = self.client.post("/", data={"pastebin_text": "hi"})
         self.assertEqual(Pastebin.objects.count(), 1)
         apastebin = Pastebin.objects.first()
         self.assertEqual(apastebin.text, "hi")
-        self.assertEqual(apastebin.id,
-                         hashlib.md5("hi"
-                                     .encode("utf-8")).hexdigest())
+        self.assertEqual(apastebin.id, hi_id)
 
-        self.assertTemplateUsed(response, "home.html")
-        self.assertContains(response,
-                            "http://localhost:8000/49f68a5c8493ec2c0bf489821c21fc3b")
+    def test_redirects_after_POST(self):
+        hi_id = hashlib.md5("hi"
+                         .encode("utf-8")).hexdigest()
+        response = self.client.post("/", data={"pastebin_text": "hi"})
+        self.assertRedirects(response, BASE_URL + hi_id)
 
 
 class PastebinModelTest(TestCase):
