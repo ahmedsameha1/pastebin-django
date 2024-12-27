@@ -25,6 +25,12 @@ class HomePageTest(TestCase):
         response = self.client.post("/", data={"pastebin_text": "hi"})
         self.assertRedirects(response, BASE_URL + hi_id)
 
+class PastebinPageTest(TestCase):
+    def test_pastebin_page_returns_correct_html(self):
+        response = self.client.get("/78a")
+        self.assertTemplateUsed(response, "pastebin.html")
+        self.assertContains(response, "78a")
+
 
 class PastebinModelTest(TestCase):
     def test_saving_and_retrieving_pastebins(self):

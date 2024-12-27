@@ -20,4 +20,4 @@ def home_page(request):
 
 
 def pastebin_page(request, id):
-    return HttpResponse()
+    return render(request, "pastebin.html", {"id": id})
