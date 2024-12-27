@@ -34,7 +34,6 @@ class NewVisitorTest(LiveServerTestCase):
         self.assertEqual(current_url,
                          self.live_server_url+"/6bde0a9108435670b29d23fd689a0e90")
         url_header = self.browser.find_element(By.TAG_NAME, "h1").text
-        self.assertEqual(url_header, self.live_server_url +
-                         "/6bde0a9108435670b29d23fd689a0e90")
+        self.assertEqual(url_header, "6bde0a9108435670b29d23fd689a0e90")
         pastebin_text = self.browser.find_element(By.TAG_NAME, "p").text
         self.assertEqual(pastebin_text, "This is a test pastebin")

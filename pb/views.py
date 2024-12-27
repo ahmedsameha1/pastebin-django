@@ -20,4 +20,5 @@ def home_page(request):
 
 
 def pastebin_page(request, id):
-    return render(request, "pastebin.html", {"id": id})
+    pastebin = Pastebin.objects.filter(id=id).first()
+    return render(request, "pastebin.html", {"pastebin": pastebin})
