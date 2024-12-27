@@ -1,10 +1,10 @@
-import unittest
+from django.test import LiveServerTestCase
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 import time
 
 
-class NewVisitorTest(unittest.TestCase):
+class NewVisitorTest(LiveServerTestCase):
     def setUp(self):
         self.browser = webdriver.Firefox()
 
@@ -12,7 +12,7 @@ class NewVisitorTest(unittest.TestCase):
         self.browser.quit()
 
     def test_can_create_a_pastebin_then_visiting_it(self):
-        self.browser.get("http://localhost:8000")
+        self.browser.get(self.live_server_url)
         self.assertIn("Pastebin", self.browser.title)
         header_text = self.browser.find_element(By.TAG_NAME, "h1").text
         self.assertEqual("Pastebin", header_text)
@@ -32,11 +32,9 @@ class NewVisitorTest(unittest.TestCase):
         time.sleep(1)
         current_url = self.browser.current_url
         self.assertEqual(current_url,
-                         "http://localhost:8000/6bde0a9108435670b29d23fd689a0e90")
+                         self.live_server_url+"/6bde0a9108435670b29d23fd689a0e90")
         url_header = self.browser.find_element(By.TAG_NAME, "h1").text
-        self.assertEqual(url_header, "http://localhost:8000/6bde0a9108435670b29d23fd689a0e90")
+        self.assertEqual(url_header, self.live_server_url +
+                         "/6bde0a9108435670b29d23fd689a0e90")
         pastebin_text = self.browser.find_element(By.TAG_NAME, "p").text
         self.assertEqual(pastebin_text, "This is a test pastebin")
-
-if __name__ == "__main__":
-    unittest.main()
