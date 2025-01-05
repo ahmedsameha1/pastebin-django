@@ -1,4 +1,10 @@
+{% load static %}
 <html>
-    <h1>{{ pastebin.id }}</h1>
-    <p>{{ pastebin.text }}</p>
+    <script src="{% static 'app.js' %}"></script>
+<h1>{{ pastebin.id }}</h1>
+<p>{{ pastebin.text }}</p>
+<!--<form method="DELETE">-->
+<button type="submit" onclick="confirmDeletion()">Delete</button>
+<!--</form>-->
+
 </html>
