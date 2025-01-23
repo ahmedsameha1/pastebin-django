@@ -1,10 +1,19 @@
 {% load static %}
 <html>
-    <script src="{% static 'app.js' %}"></script>
 <h1>{{ pastebin.id }}</h1>
 <p>{{ pastebin.text }}</p>
-<!--<form method="DELETE">-->
-<button type="submit" onclick="confirmDeletion()">Delete</button>
-<!--</form>-->
+<button id="deleteButton" type="submit" onclick="confirmDeletion()">Delete</button>
+<dialog id="confirmDialog">
+    <p>Delete?</p>
+    <button id="confirmButton">Delete</button>
+</dialog>
+<dialog id="infoDialog">
+    <form method="GET" action="/">
+        <p>Deleted</p>
+        <button id="okButton">Ok</button>
+    </form>
+</dialog>
+
+<script src="{% static 'app.js' %}"></script>
 
 </html>

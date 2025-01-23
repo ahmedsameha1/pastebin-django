@@ -1,10 +1,10 @@
-from django.test import LiveServerTestCase
+from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 import time
 
 
-class NewVisitorTest(LiveServerTestCase):
+class NewVisitorTest(StaticLiveServerTestCase):
     def setUp(self):
         self.browser = webdriver.Chrome()
 
@@ -37,7 +37,7 @@ class NewVisitorTest(LiveServerTestCase):
         self.assertEqual(url_header, "6bde0a9108435670b29d23fd689a0e90")
         pastebin_text = self.browser.find_element(By.TAG_NAME, "p").text
         self.assertEqual(pastebin_text, "This is a test pastebin")
-        delete_button = self.browser.find_element(By.TAG_NAME, "button")
+        delete_button = self.browser.find_element(By.ID, "deleteButton")
         self.assertEqual(delete_button.get_attribute("type"),
                          "submit")
         self.assertEqual(delete_button.text, "Delete")
@@ -48,6 +48,7 @@ class NewVisitorTest(LiveServerTestCase):
         self.assertEqual(message.text, "Delete?")
         confirmBtn = confirmDialog.find_element(By.ID, "confirmButton")
         confirmBtn.click()
+        self.assertFalse(confirmDialog.is_displayed())
         time.sleep(1)
         infoDialog = self.browser.find_element(By.ID, "infoDialog")
         info = infoDialog.find_element(By.TAG_NAME, "p")
@@ -55,8 +56,9 @@ class NewVisitorTest(LiveServerTestCase):
         okBtn = infoDialog.find_element(By.ID, "okButton")
         okBtn.click()
         current_url = self.browser.current_url
-        self.assertEqual(current_url, self.live_server_url)
-        self.browser.get(self.live_server_url+"/6bde0a9108435670b29d23fd689a0e90")
+        self.assertEqual(current_url, self.live_server_url+"/?")
+        self.browser.get(self.live_server_url +
+                         "/6bde0a9108435670b29d23fd689a0e90")
         time.sleep(1)
         infoDialog = self.browser.find_element(By.ID, "infoDialog")
         info = infoDialog.find_element(By.TAG_NAME, "p")

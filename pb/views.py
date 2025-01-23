@@ -21,4 +21,8 @@ def home_page(request):
 
 def pastebin_page(request, id):
     pastebin = Pastebin.objects.filter(id=id).first()
-    return render(request, "pastebin.html", {"pastebin": pastebin})
+    if pastebin == None:
+        return render(request, "pastebin_invalid.html")
+    else:
+        return render(request, "pastebin.html", {"pastebin": pastebin})
+        

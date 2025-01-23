@@ -28,8 +28,13 @@ class HomePageTest(TestCase):
 class PastebinPageTest(TestCase):
     def test_pastebin_page_returns_correct_html(self):
         response = self.client.get("/78a")
+        self.assertContains(response, "Invalid")
+        self.assertTemplateUsed(response, "pastebin_invalid.html")
+        Pastebin.objects.create(id="78a", text="hi")
+        response = self.client.get("/78a")
         self.assertContains(response, "Delete")
         self.assertTemplateUsed(response, "pastebin.html")
+
 
     def test_pastebin_page_contains_the_correct_pastebin_data(self):
         Pastebin.objects.create(id="78a", text="hi")
