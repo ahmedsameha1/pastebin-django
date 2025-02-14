@@ -50,6 +50,10 @@ class PastebinPageTest(TestCase):
         deletedPastebin = Pastebin.objects.filter(id="78a").first()
         self.assertIsNone(deletedPastebin)
 
+    def test_delete_a_nonexistant_pastebin(self):
+        response = self.client.delete("/78a")
+        self.assertEqual(response.status_code, 404)
+        self.assertEqual(response.content, b"")
 
 class PastebinModelTest(TestCase):
     def test_saving_and_retrieving_pastebins(self):

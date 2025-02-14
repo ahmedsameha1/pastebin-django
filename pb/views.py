@@ -27,8 +27,12 @@ def pastebin_page(request, id):
         else:
             return render(request, "pastebin.html", {"pastebin": pastebin})
     elif request.method == "DELETE":
-        Pastebin.objects.filter(id=id).delete()
+        pastebin = Pastebin.objects.filter(id=id).first()
         response = HttpResponse()
+        if pastebin == None:
+            response.status_code = 404
+            return response
+        pastebin.delete()
         response.status_code = 204
         return response
         

@@ -3,13 +3,22 @@
 <h1>{{ pastebin.id }}</h1>
 <p>{{ pastebin.text }}</p>
 <button id="deleteButton" type="submit" onclick="confirmDeletion()">Delete</button>
+
 <dialog id="confirmDialog">
     <p>Delete?</p>
     <button id="confirmButton">Delete</button>
 </dialog>
+
 <dialog id="infoDialog">
     <form method="GET" action="/">
         <p>Deleted</p>
+        <button id="okButton">Ok</button>
+    </form>
+</dialog>
+
+<dialog id="alreadyDeletedDialog">
+    <form method="GET" action="/">
+        <p>Already deleted!</p>
         <button id="okButton">Ok</button>
     </form>
 </dialog>
