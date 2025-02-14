@@ -20,9 +20,15 @@ def home_page(request):
 
 
 def pastebin_page(request, id):
-    pastebin = Pastebin.objects.filter(id=id).first()
-    if pastebin == None:
-        return render(request, "pastebin_invalid.html")
-    else:
-        return render(request, "pastebin.html", {"pastebin": pastebin})
+    if request.method == "GET":
+        pastebin = Pastebin.objects.filter(id=id).first()
+        if pastebin == None:
+            return render(request, "pastebin_invalid.html")
+        else:
+            return render(request, "pastebin.html", {"pastebin": pastebin})
+    elif request.method == "DELETE":
+        Pastebin.objects.filter(id=id).delete()
+        response = HttpResponse()
+        response.status_code = 204
+        return response
         

@@ -63,10 +63,8 @@ class NewVisitorTest(StaticLiveServerTestCase):
         infoDialog = self.browser.find_element(By.ID, "infoDialog")
         info = infoDialog.find_element(By.TAG_NAME, "p")
         self.assertEqual(info.text, "Invalid id")
-        alert = self.browser.switch_to.alert
-        self.assertEqual(alert.text, "Invalid id")
         okBtn = infoDialog.find_element(By.ID, "okButton")
         okBtn.click()
         time.sleep(1)
         current_url = self.browser.current_url
-        self.assertEqual(current_url, self.live_server_url)
+        self.assertEqual(current_url, self.live_server_url+"/?")

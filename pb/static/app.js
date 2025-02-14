@@ -7,6 +7,11 @@ function confirmDeletion() {
 }
 
 confirmButton.addEventListener("click", () => {
+    const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+    window.fetch(window.location.href, {
+        method: "DELETE", headers: { 'X-CSRFToken': csrftoken },
+        mode: 'same-origin'
+    });
     confirmDialog.close();
     infoDialog.showModal();
-})
+});

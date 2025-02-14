@@ -42,7 +42,13 @@ class PastebinPageTest(TestCase):
         self.assertContains(response, "78a")
         self.assertContains(response, "hi")
     
-    #def test_delete_con
+    def test_delete_a_pastebin(self):
+        Pastebin.objects.create(id="78a", text="hi")
+        response = self.client.delete("/78a")
+        self.assertEqual(response.status_code, 204)
+        self.assertEqual(response.content, b"")
+        deletedPastebin = Pastebin.objects.filter(id="78a").first()
+        self.assertIsNone(deletedPastebin)
 
 
 class PastebinModelTest(TestCase):
